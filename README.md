@@ -59,7 +59,7 @@ The liquibase validate action accepts all valid liquibase global options as opti
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: liquibase-github-actions/liquibase-validate-action@v4.17.0
+  - uses: liquibase-github-actions/validate@v4.17.0
     with:
       changelogFile: ""
       url: ""
