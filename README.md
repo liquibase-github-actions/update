@@ -1,6 +1,7 @@
 # Liquibase Update Action
 Official GitHub Action to run Liquibase Update in your GitHub Action Workflow. For more information on how update works visit the [Official Liquibase Documentation](https://docs.liquibase.com/commands/home.html).
-
+## Update
+Deploy any changes in the changelog file that have not been deployed
 ## Usage
 ```yaml
 steps:
