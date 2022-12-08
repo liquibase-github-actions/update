@@ -33,6 +33,9 @@ inputs:
   password: # string
     description: 'Password to use to connect to the database'
     required: false
+  rollbackOnError: # bool
+    description: 'If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.'
+    required: false
   url: # string
     description: '*required* The JDBC database connection URL'
     required: true
@@ -218,6 +221,7 @@ runs:
     - ${{ inputs.driverPropertiesFile }}
     - ${{ inputs.labelFilter }}
     - ${{ inputs.password }}
+    - ${{ inputs.rollbackOnError }}
     - ${{ inputs.url }}
     - ${{ inputs.username }}
     - ${{ inputs.alwaysOverrideStoredLogicSchema }}
