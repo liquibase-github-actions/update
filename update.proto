@@ -6,7 +6,7 @@ option java_package = "org.liquibase.grpc.proto";
 option java_multiple_files = true;
 option java_outer_classname = "UpdateProto";
 
-package liquibase.pro;
+package liquibase;
 
 service UpdateService {
   rpc execute(UpdateRequest) returns (Response) {}
@@ -25,9 +25,10 @@ message UpdateRequest {
   optional string label_filter = 9; // Changeset labels to match
   optional string password = 10; // Password to use to connect to the database
   optional bool rollback_on_error = 11; // If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.
-  string url = 12; // *required* The JDBC database connection URL
-  optional string username = 13; // Username to use to connect to the database
-  liquibase.GlobalOptions global_options = 14;
+  optional string show_summary = 12; // Type of update results summary to show.  Values can be 'off', 'summary', or 'verbose'.
+  string url = 13; // *required* The JDBC database connection URL
+  optional string username = 14; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 15;
 }
 
 message Response {

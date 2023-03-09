@@ -6,7 +6,7 @@ Deploy any changes in the changelog file that have not been deployed
 ```yaml
 steps:
 - uses: actions/checkout@v3
-- uses: liquibase-github-actions/update@v4.19.1
+- uses: liquibase-github-actions/update@v4.20.0
   with:
     # The root changelog
     # string
@@ -68,6 +68,11 @@ steps:
     # Optional
     rollbackOnError: ""
 
+    # Type of update results summary to show.  Values can be "off", "summary", or "verbose".
+    # string
+    # Optional
+    showSummary: ""
+
     # Username to use to connect to the database
     # string
     # Optional
@@ -85,7 +90,7 @@ The liquibase update action accepts all valid liquibase global options as option
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: liquibase-github-actions/update@v4.19.1
+  - uses: liquibase-github-actions/update@v4.20.0
     with:
       changelogFile: ""
       url: ""
