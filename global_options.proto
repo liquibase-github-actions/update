@@ -46,29 +46,30 @@ message GlobalOptions {
   optional string log_file = 35;
   optional string log_format = 36; // Sets the format of log output to console or log files. Open Source users default to unstructured "TEXT" logs to the console or output log files. Pro users have the option to set value as "JSON" or "JSON_PRETTY" to enable json-structured log files to the console or output log files.
   optional string log_level = 37; // Controls which logs get set to stderr AND to any log file. The CLI defaults, if log file set, to SEVERE. Others vary by integration. The official log levels are: OFF, SEVERE, WARNING, INFO, FINE
-  optional string missing_property_mode = 38; // How to handle changelog property expressions where a value is not set. For example, a string '${address}' when no 'address' property was defined. Values can be: 'preserve' which leaves the string as-is, 'empty' which replaces it with an empty string, or 'error' which stops processing with an error.
-  optional string monitor_performance = 39; // Enable performance tracking. Set to 'false' to disable. If set to 'true', data is stored to a `liquibase-TIMESTAMP.jfr` file in your working directory. Any other value will enable tracking and be used as the name of the file to write the data to.
-  optional string native_executor = 40; // Custom executor that can specified
-  optional string on_missing_include = 41; // If set to WARN, then liquibase will not throw exception on missing changelog file, instead will show a warning message.
-  optional string output_file = 42;
-  optional string output_file_encoding = 43; // Encoding to use when writing files
-  optional string output_line_separator = 44; // Line separator for output
-  optional bool preserve_schema_case = 45; // Should liquibase treat schema and catalog names as case sensitive?
-  optional string pro_license_key = 46; // DEPRECATED: Liquibase Pro license key used to unlock paid capabilities. Get a free trial at https://www.liquibase.com/protrial and use in CLI or add liquibase.pro.licenseKey=<yourKey> into your defaults file.
-  optional bool pro_mark_unused_not_drop = 47; // If a column would be dropped in a diffChangeLog, call markUnused instead if set to true
-  optional bool pro_sql_inline = 48; // If true, generate changeSets with SQL-based changes inlined instead of saving them to an external file
-  optional bool pro_synonyms_drop_public = 49; // If false, do not drop public synonyms in diffChangeLog/dropAll
-  optional bool prompt_for_non_local_database = 50; // Should Liquibase prompt if a non-local database is being accessed
-  optional string property_provider_class = 51; // Implementation of Properties class to provide additional driver properties
-  optional string search_path = 52; // Complete list of Location(s) to search for files such as changelog files in. Multiple paths can be specified by separating them with commas.
-  optional bool secure_parsing = 53; // If true, remove functionality from file parsers which could be used insecurely. Examples include (but not limited to) disabling remote XML entity support.
-  optional bool should_run = 54; // Should Liquibase commands execute
-  optional bool should_snapshot_data = 55; // Should Liquibase snapshot data by default?
-  optional bool show_banner = 56; // If true, show a Liquibase banner on startup.
-  optional string sql_log_level = 57; // Level to log SQL statements to
-  optional bool strict = 58; // Be stricter on allowed Liquibase configuration and setup?
-  optional bool support_property_escaping = 59; // Support escaping changelog parameters using a colon. Example: ${:user.name}
-  optional bool use_procedure_schema = 60; // If set to true (default value), createProcedure tags with a set schemaName will modify the procedure body with the given schema name.
-  optional bool validate_xml_changelog_files = 61; // Will perform xsd validation of XML changelog files. When many XML changelog files are included this validation may impact Liquibase performance. Defaults to true.
+  optional bool mirror_console_messages_to_log = 38; // When set to true, the console messages are mirrored to the logs as [liquibase.ui] to provide a more complete picture of liquibase operations to log analysis tools. Set to false to change this behavior.
+  optional string missing_property_mode = 39; // How to handle changelog property expressions where a value is not set. For example, a string '${address}' when no 'address' property was defined. Values can be: 'preserve' which leaves the string as-is, 'empty' which replaces it with an empty string, or 'error' which stops processing with an error.
+  optional string monitor_performance = 40; // Enable performance tracking. Set to 'false' to disable. If set to 'true', data is stored to a `liquibase-TIMESTAMP.jfr` file in your working directory. Any other value will enable tracking and be used as the name of the file to write the data to.
+  optional string native_executor = 41; // Custom executor that can specified
+  optional string on_missing_include_changelog = 42; // If set to WARN, then liquibase will not throw exception on missing changelog file, instead will show a warning message.
+  optional string output_file = 43;
+  optional string output_file_encoding = 44; // Encoding to use when writing files
+  optional string output_line_separator = 45; // Line separator for output
+  optional bool preserve_schema_case = 46; // Should liquibase treat schema and catalog names as case sensitive?
+  optional string pro_license_key = 47; // DEPRECATED: Liquibase Pro license key used to unlock paid capabilities. Get a free trial at https://www.liquibase.com/protrial and use in CLI or add liquibase.pro.licenseKey=<yourKey> into your defaults file.
+  optional bool pro_mark_unused_not_drop = 48; // If a column would be dropped in a diffChangeLog, call markUnused instead if set to true
+  optional bool pro_sql_inline = 49; // If true, generate changeSets with SQL-based changes inlined instead of saving them to an external file
+  optional bool pro_synonyms_drop_public = 50; // If false, do not drop public synonyms in diffChangeLog/dropAll
+  optional bool prompt_for_non_local_database = 51; // Should Liquibase prompt if a non-local database is being accessed
+  optional string property_provider_class = 52; // Implementation of Properties class to provide additional driver properties
+  optional string search_path = 53; // Complete list of Location(s) to search for files such as changelog files in. Multiple paths can be specified by separating them with commas.
+  optional bool secure_parsing = 54; // If true, remove functionality from file parsers which could be used insecurely. Examples include (but not limited to) disabling remote XML entity support.
+  optional bool should_run = 55; // Should Liquibase commands execute
+  optional bool should_snapshot_data = 56; // Should Liquibase snapshot data by default?
+  optional bool show_banner = 57; // If true, show a Liquibase banner on startup.
+  optional string sql_log_level = 58; // Level to log SQL statements to
+  optional bool strict = 59; // Be stricter on allowed Liquibase configuration and setup?
+  optional bool support_property_escaping = 60; // Support escaping changelog parameters using a colon. Example: ${:user.name}
+  optional bool use_procedure_schema = 61; // If set to true (default value), createProcedure tags with a set schemaName will modify the procedure body with the given schema name.
+  optional bool validate_xml_changelog_files = 62; // Will perform xsd validation of XML changelog files. When many XML changelog files are included this validation may impact Liquibase performance. Defaults to true.
 }
 

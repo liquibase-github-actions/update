@@ -14,21 +14,25 @@ service UpdateService {
 
 /* Deploy any changes in the changelog file that have not been deployed */
 message UpdateRequest {
-  optional string change_exec_listener_class = 1; // Fully-qualified class which specifies a ChangeExecListener
-  optional string change_exec_listener_properties_file = 2; // Path to a properties file for the ChangeExecListenerClass
-  string changelog_file = 3; // *required* The root changelog
-  optional string contexts = 4; // Changeset contexts to match
-  optional string default_catalog_name = 5; // The default catalog name to use for the database connection
-  optional string default_schema_name = 6; // The default schema name to use for the database connection
-  optional string driver = 7; // The JDBC driver class
-  optional string driver_properties_file = 8; // The JDBC driver properties file
-  optional string label_filter = 9; // Changeset labels to match
-  optional string password = 10; // Password to use to connect to the database
-  optional bool rollback_on_error = 11; // If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.
-  optional string show_summary = 12; // Type of update results summary to show.  Values can be 'off', 'summary', or 'verbose'.
-  string url = 13; // *required* The JDBC database connection URL
-  optional string username = 14; // Username to use to connect to the database
-  liquibase.GlobalOptions global_options = 15;
+  optional string change_exec_listener = 1;
+  optional string change_exec_listener_class = 2; // Fully-qualified class which specifies a ChangeExecListener
+  optional string change_exec_listener_properties_file = 3; // Path to a properties file for the ChangeExecListenerClass
+  string changelog_file = 4; // *required* The root changelog
+  optional string changelog_parameters = 5;
+  optional string contexts = 6; // Changeset contexts to match
+  optional string database = 7;
+  optional string default_catalog_name = 8; // The default catalog name to use for the database connection
+  optional string default_schema_name = 9; // The default schema name to use for the database connection
+  optional string driver = 10; // The JDBC driver class
+  optional string driver_properties_file = 11; // The JDBC driver properties file
+  optional string label_filter = 12; // Changeset labels to match
+  optional string password = 13; // Password to use to connect to the database
+  optional bool rollback_on_error = 14; // If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.
+  optional string show_summary = 15; // Type of update results summary to show.  Values can be 'off', 'summary', or 'verbose'.
+  optional bool skip_database_step = 16;
+  string url = 17; // *required* The JDBC database connection URL
+  optional string username = 18; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 19;
 }
 
 message Response {
