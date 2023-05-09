@@ -24,22 +24,22 @@ inputs:
   database: # string
     description: ''
     required: false
-  defaultCatalogName: # string
+  defaultCatalogName: 
     description: 'The default catalog name to use for the database connection'
     required: false
-  defaultSchemaName: # string
+  defaultSchemaName: e-commerce_cart
     description: 'The default schema name to use for the database connection'
     required: false
-  driver: # string
+  driver: com.mysql.cj.jdbc.Driver
     description: 'The JDBC driver class'
     required: false
-  driverPropertiesFile: # string
+  driverPropertiesFile: C:\liquibase_test/liquibase.properties
     description: 'The JDBC driver properties file'
     required: false
   labelFilter: # string
     description: 'Changeset labels to match'
     required: false
-  password: # string
+  password: ThisIsANewPassword22
     description: 'Password to use to connect to the database'
     required: false
   rollbackOnError: # bool
@@ -51,10 +51,10 @@ inputs:
   skipDatabaseStep: # bool
     description: ''
     required: false
-  url: # string
+  url: jdbc:mysql://localhost:3306/poc_db2
     description: '*required* The JDBC database connection URL'
     required: true
-  username: # string
+  username: root
     description: 'Username to use to connect to the database'
     required: false
   alwaysDropInsteadOfReplace: # bool
