@@ -12,7 +12,7 @@ inputs:
   changeExecListenerPropertiesFile: # string
     description: 'Path to a properties file for the ChangeExecListenerClass'
     required: false
-  changelogFile: C:\liquibase_test/dbchangelog.xml
+  changelogFile: # string
     description: '*required* The root changelog'
     required: true
   changelogParameters: # string
@@ -27,34 +27,34 @@ inputs:
   defaultCatalogName: 
     description: 'The default catalog name to use for the database connection'
     required: false
-  defaultSchemaName: e-commerce_cart
+  defaultSchemaName: # string
     description: 'The default schema name to use for the database connection'
     required: false
-  driver: com.mysql.cj.jdbc.Driver
+  driver: # string
     description: 'The JDBC driver class'
     required: false
-  driverPropertiesFile: C:\liquibase_test/liquibase.properties
+  driverPropertiesFile: # string
     description: 'The JDBC driver properties file'
     required: false
   labelFilter: # string
     description: 'Changeset labels to match'
     required: false
-  password: ThisIsANewPassword22
+  password: # string
     description: 'Password to use to connect to the database'
     required: false
   rollbackOnError: # bool
     description: 'If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.'
     required: false
-  showSummary: summary
+  showSummary: # string
     description: 'Type of update results summary to show.  Values can be "off", "summary", or "verbose".'
     required: false
   skipDatabaseStep: # bool
     description: ''
     required: false
-  url: jdbc:mysql://localhost:3306/e-commerce_cart
+  url: # string
     description: '*required* The JDBC database connection URL'
     required: true
-  username: root
+  username: # string
     description: 'Username to use to connect to the database'
     required: false
   alwaysDropInsteadOfReplace: # bool
@@ -93,13 +93,13 @@ inputs:
   ddlLockTimeout: # int32
     description: 'The DDL_LOCK_TIMEOUT parameter indicates the number of seconds a DDL command should wait for the locks to become available before throwing the resource busy error message. This applies only to Oracle databases.'
     required: false
-  defaultsFile: C:\liquibase_test/liquibase.properties
+  defaultsFile: # string
     description: 'File with default Liquibase properties'
     required: false
   diffColumnOrder: # bool
     description: 'Should Liquibase compare column order in diff operation?'
     required: false
-  duplicateFileMode: WARN
+  duplicateFileMode: # string
     description: 'How to handle multiple files being found in the search path that have duplicate paths. Options are WARN (log warning and choose one at random) or ERROR (fail current operation)'
     required: false
   errorOnCircularIncludeAll: # bool
@@ -144,19 +144,19 @@ inputs:
   liquibaseCatalogName: # string
     description: 'Catalog to use for Liquibase objects'
     required: false
-  liquibaseSchemaName: e-commerce_cart
+  liquibaseSchemaName: # string
     description: 'Schema to use for Liquibase objects'
     required: false
-  liquibaseTablespaceName: users
+  liquibaseTablespaceName: # string
     description: 'Tablespace to use for Liquibase objects'
     required: false
-  logChannels: all
+  logChannels: # string
     description: 'Controls which log channels have their level set by the liquibase.logLevel setting. Comma separate multiple values. To set the level of all channels, use "all". Example: liquibase,org.mariadb.jdbc'
     required: false
   logFile: # string
     description: ''
     required: false
-  logFormat: TEXT
+  logFormat: # string
     description: 'Sets the format of log output to console or log files. Open Source users default to unstructured "TEXT" logs to the console or output log files. Pro users have the option to set value as "JSON" or "JSON_PRETTY" to enable json-structured log files to the console or output log files.'
     required: false
   logLevel: # string
