@@ -14,7 +14,7 @@ inputs:
     required: false
   changelogFile: # string
     description: '*required* The root changelog'
-    required: true
+    required: false
   changelogParameters: # string
     description: ''
     required: false
@@ -53,7 +53,7 @@ inputs:
     required: false
   url: # string
     description: '*required* The JDBC database connection URL'
-    required: true
+    required: false
   username: # string
     description: 'Username to use to connect to the database'
     required: false
