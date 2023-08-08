@@ -3,9 +3,6 @@
 name: 'Liquibase Update Action'
 description: 'Deploy any changes in the changelog file that have not been deployed'
 inputs:
-  changeExecListener: # string
-    description: ''
-    required: false
   changeExecListenerClass: # string
     description: 'Fully-qualified class which specifies a ChangeExecListener'
     required: false
@@ -15,14 +12,8 @@ inputs:
   changelogFile: # string
     description: '*required* The root changelog'
     required: true
-  changelogParameters: # string
-    description: ''
-    required: false
   contexts: # string
     description: 'Changeset contexts to match'
-    required: false
-  database: # string
-    description: ''
     required: false
   defaultCatalogName: # string
     description: 'The default catalog name to use for the database connection'
@@ -47,9 +38,6 @@ inputs:
     required: false
   showSummary: # string
     description: 'Type of update results summary to show.  Values can be "off", "summary", or "verbose".'
-    required: false
-  skipDatabaseStep: # bool
-    description: ''
     required: false
   url: # string
     description: '*required* The JDBC database connection URL'
@@ -81,6 +69,9 @@ inputs:
   convertDataTypes: # bool
     description: 'Should Liquibase convert to/from STANDARD data types. Applies to both snapshot and update commands.'
     required: false
+  customLogDataFile: # string
+    description: '[PRO]Relative or fully qualified path to a yaml file containing key:value data to inject or exclude data from JSON structured logs. Learn more at https://docs.liquibase.com/structured-logging'
+    required: false
   databaseChangelogLockTableName: # string
     description: 'Name of table to use for tracking concurrent Liquibase usage'
     required: false
@@ -111,6 +102,9 @@ inputs:
   filterLogMessages: # bool
     description: 'DEPRECATED: No longer used'
     required: false
+  flowVerboseToString: # bool
+    description: 'If true, display a more verbose output for the FlowFile toString representation'
+    required: false
   generateChangesetCreatedValues: # bool
     description: 'Should Liquibase include a "created" attribute in diff/generateChangelog changesets with the current datetime'
     required: false
@@ -119,18 +113,6 @@ inputs:
     required: false
   headless: # bool
     description: 'Force liquibase to think it has no access to a keyboard'
-    required: false
-  hubApiKey: # string
-    description: 'Liquibase Hub API key for operations'
-    required: false
-  hubLogLevel: # string
-    description: 'Log level for filtering log messages to send to Liquibase Hub during operations. Values can be any acceptable log level.'
-    required: false
-  hubMode: # string
-    description: 'Content to send to Liquibase Hub during operations. Values can be "all", "meta", or "off"'
-    required: false
-  hubUrl: # string
-    description: 'Liquibase Hub URL for operations'
     required: false
   includeCatalogInSpecification: # bool
     description: 'Should Liquibase include the catalog name when determining equality?'
@@ -225,6 +207,9 @@ inputs:
   sqlLogLevel: # string
     description: 'Level to log SQL statements to'
     required: false
+  sqlShowSqlWarnings: # bool
+    description: 'Show SQLWarning messages'
+    required: false
   strict: # bool
     description: 'Be stricter on allowed Liquibase configuration and setup?'
     required: false
@@ -241,13 +226,10 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.changeExecListener }}
     - ${{ inputs.changeExecListenerClass }}
     - ${{ inputs.changeExecListenerPropertiesFile }}
     - ${{ inputs.changelogFile }}
-    - ${{ inputs.changelogParameters }}
     - ${{ inputs.contexts }}
-    - ${{ inputs.database }}
     - ${{ inputs.defaultCatalogName }}
     - ${{ inputs.defaultSchemaName }}
     - ${{ inputs.driver }}
@@ -256,7 +238,6 @@ runs:
     - ${{ inputs.password }}
     - ${{ inputs.rollbackOnError }}
     - ${{ inputs.showSummary }}
-    - ${{ inputs.skipDatabaseStep }}
     - ${{ inputs.url }}
     - ${{ inputs.username }}
     - ${{ inputs.alwaysDropInsteadOfReplace }}
@@ -267,6 +248,7 @@ runs:
     - ${{ inputs.changelogParseMode }}
     - ${{ inputs.classpath }}
     - ${{ inputs.convertDataTypes }}
+    - ${{ inputs.customLogDataFile }}
     - ${{ inputs.databaseChangelogLockTableName }}
     - ${{ inputs.databaseChangelogTableName }}
     - ${{ inputs.databaseClass }}
@@ -277,13 +259,10 @@ runs:
     - ${{ inputs.errorOnCircularIncludeAll }}
     - ${{ inputs.fileEncoding }}
     - ${{ inputs.filterLogMessages }}
+    - ${{ inputs.flowVerboseToString }}
     - ${{ inputs.generateChangesetCreatedValues }}
     - ${{ inputs.generatedChangesetIdsContainsDescription }}
     - ${{ inputs.headless }}
-    - ${{ inputs.hubApiKey }}
-    - ${{ inputs.hubLogLevel }}
-    - ${{ inputs.hubMode }}
-    - ${{ inputs.hubUrl }}
     - ${{ inputs.includeCatalogInSpecification }}
     - ${{ inputs.includeSystemClasspath }}
     - ${{ inputs.licenseKey }}
@@ -315,6 +294,7 @@ runs:
     - ${{ inputs.shouldSnapshotData }}
     - ${{ inputs.showBanner }}
     - ${{ inputs.sqlLogLevel }}
+    - ${{ inputs.sqlShowSqlWarnings }}
     - ${{ inputs.strict }}
     - ${{ inputs.supportPropertyEscaping }}
     - ${{ inputs.useProcedureSchema }}

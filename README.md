@@ -18,11 +18,6 @@ steps:
     # Required
     url: ""
 
-    # 
-    # string
-    # Optional
-    changeExecListener: ""
-
     # Fully-qualified class which specifies a ChangeExecListener
     # string
     # Optional
@@ -33,20 +28,10 @@ steps:
     # Optional
     changeExecListenerPropertiesFile: ""
 
-    # 
-    # string
-    # Optional
-    changelogParameters: ""
-
     # Changeset contexts to match
     # string
     # Optional
     contexts: ""
-
-    # 
-    # string
-    # Optional
-    database: ""
 
     # The default catalog name to use for the database connection
     # string
@@ -87,11 +72,6 @@ steps:
     # string
     # Optional
     showSummary: ""
-
-    # 
-    # bool
-    # Optional
-    skipDatabaseStep: ""
 
     # Username to use to connect to the database
     # string
