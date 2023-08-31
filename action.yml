@@ -12,7 +12,7 @@ inputs:
   changelogFile: # string
     description: '*required* The root changelog'
     required: true
-  contexts: # string
+  contextFilter: # string
     description: 'Changeset contexts to match'
     required: false
   defaultCatalogName: # string
@@ -90,6 +90,33 @@ inputs:
   diffColumnOrder: # bool
     description: 'Should Liquibase compare column order in diff operation?'
     required: false
+  driftChangedSeverity: # int32
+    description: 'Changed object drift severity'
+    required: false
+  driftEnabled: # bool
+    description: 'Enable or disable drift detection'
+    required: false
+  driftMissingSeverity: # int32
+    description: 'Missing object drift severity'
+    required: false
+  driftReportEnabled: # bool
+    description: 'Enable or disable drift reporting.'
+    required: false
+  driftReportFormat: # string
+    description: 'The format of the Drift Report. Currently, can only be set to "html".'
+    required: false
+  driftReportMode: # string
+    description: 'The report mode of the Drift Report. The report mode defines the differences to include in the Drift Report. Valid modes include: ALL, MISSING, UNEXPECTED, CHANGED'
+    required: false
+  driftReportName: # string
+    description: 'The name of the Drift Report.'
+    required: false
+  driftReportPath: # string
+    description: 'The path to the directory to generate Drift Reports.'
+    required: false
+  driftUnexpectedSeverity: # int32
+    description: 'Unexpected object drift severity'
+    required: false
   duplicateFileMode: # string
     description: 'How to handle multiple files being found in the search path that have duplicate paths. Options are WARN (log warning and choose one at random) or ERROR (fail current operation)'
     required: false
@@ -158,6 +185,9 @@ inputs:
     required: false
   onMissingIncludeChangelog: # string
     description: 'If set to WARN, then liquibase will not throw exception on missing changelog file, instead will show a warning message.'
+    required: false
+  onMissingSqlFile: # string
+    description: 'If set to WARN, then Liquibase will not throw exception on missing sqlFile inside a sqlFile change type, instead will show a warning message'
     required: false
   outputFile: # string
     description: ''
@@ -229,7 +259,7 @@ runs:
     - ${{ inputs.changeExecListenerClass }}
     - ${{ inputs.changeExecListenerPropertiesFile }}
     - ${{ inputs.changelogFile }}
-    - ${{ inputs.contexts }}
+    - ${{ inputs.contextFilter }}
     - ${{ inputs.defaultCatalogName }}
     - ${{ inputs.defaultSchemaName }}
     - ${{ inputs.driver }}
@@ -255,6 +285,15 @@ runs:
     - ${{ inputs.ddlLockTimeout }}
     - ${{ inputs.defaultsFile }}
     - ${{ inputs.diffColumnOrder }}
+    - ${{ inputs.driftChangedSeverity }}
+    - ${{ inputs.driftEnabled }}
+    - ${{ inputs.driftMissingSeverity }}
+    - ${{ inputs.driftReportEnabled }}
+    - ${{ inputs.driftReportFormat }}
+    - ${{ inputs.driftReportMode }}
+    - ${{ inputs.driftReportName }}
+    - ${{ inputs.driftReportPath }}
+    - ${{ inputs.driftUnexpectedSeverity }}
     - ${{ inputs.duplicateFileMode }}
     - ${{ inputs.errorOnCircularIncludeAll }}
     - ${{ inputs.fileEncoding }}
@@ -278,6 +317,7 @@ runs:
     - ${{ inputs.monitorPerformance }}
     - ${{ inputs.nativeExecutor }}
     - ${{ inputs.onMissingIncludeChangelog }}
+    - ${{ inputs.onMissingSqlFile }}
     - ${{ inputs.outputFile }}
     - ${{ inputs.outputFileEncoding }}
     - ${{ inputs.outputLineSeparator }}
