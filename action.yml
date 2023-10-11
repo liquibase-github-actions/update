@@ -39,6 +39,9 @@ inputs:
   showSummary: # string
     description: 'Type of update results summary to show.  Values can be "off", "summary", or "verbose".'
     required: false
+  showSummaryOutput: # string
+    description: 'Summary output to report update summary results. Values can be "log", "console", or "all".'
+    required: false
   url: # string
     description: '*required* The JDBC database connection URL'
     required: true
@@ -72,6 +75,9 @@ inputs:
   customLogDataFile: # string
     description: '[PRO]Relative or fully qualified path to a yaml file containing key:value data to inject or exclude data from JSON structured logs. Learn more at https://docs.liquibase.com/structured-logging'
     required: false
+  customLogDataFrequency: # string
+    description: '[PRO]The frequency that the custom log data will be entered into the logs. Available options are: ONCE,REPEATED'
+    required: false
   databaseChangelogLockTableName: # string
     description: 'Name of table to use for tracking concurrent Liquibase usage'
     required: false
@@ -90,31 +96,19 @@ inputs:
   diffColumnOrder: # bool
     description: 'Should Liquibase compare column order in diff operation?'
     required: false
-  driftChangedSeverity: # int32
-    description: 'Changed object drift severity'
-    required: false
   driftEnabled: # bool
     description: 'Enable or disable drift detection'
     required: false
-  driftMissingSeverity: # int32
+  driftSeverity: # int32
+    description: 'Global object drift severity'
+    required: false
+  driftSeverityChanged: # int32
+    description: 'Changed object drift severity'
+    required: false
+  driftSeverityMissing: # int32
     description: 'Missing object drift severity'
     required: false
-  driftReportEnabled: # bool
-    description: 'Enable or disable drift reporting.'
-    required: false
-  driftReportFormat: # string
-    description: 'The format of the Drift Report. Currently, can only be set to "html".'
-    required: false
-  driftReportMode: # string
-    description: 'The report mode of the Drift Report. The report mode defines the differences to include in the Drift Report. Valid modes include: ALL, MISSING, UNEXPECTED, CHANGED'
-    required: false
-  driftReportName: # string
-    description: 'The name of the Drift Report.'
-    required: false
-  driftReportPath: # string
-    description: 'The path to the directory to generate Drift Reports.'
-    required: false
-  driftUnexpectedSeverity: # int32
+  driftSeverityUnexpected: # int32
     description: 'Unexpected object drift severity'
     required: false
   duplicateFileMode: # string
@@ -219,6 +213,18 @@ inputs:
   propertyProviderClass: # string
     description: 'Implementation of Properties class to provide additional driver properties'
     required: false
+  reportsEnabled: # bool
+    description: 'Enable or disable reporting.'
+    required: false
+  reportsFormat: # string
+    description: 'The format of the report. Currently, can only be set to "html".'
+    required: false
+  reportsName: # string
+    description: 'The name of the reports.'
+    required: false
+  reportsPath: # string
+    description: 'The path to the directory to generate the reports.'
+    required: false
   searchPath: # string
     description: 'Complete list of Location(s) to search for files such as changelog files in. Multiple paths can be specified by separating them with commas.'
     required: false
@@ -268,6 +274,7 @@ runs:
     - ${{ inputs.password }}
     - ${{ inputs.rollbackOnError }}
     - ${{ inputs.showSummary }}
+    - ${{ inputs.showSummaryOutput }}
     - ${{ inputs.url }}
     - ${{ inputs.username }}
     - ${{ inputs.alwaysDropInsteadOfReplace }}
@@ -279,21 +286,18 @@ runs:
     - ${{ inputs.classpath }}
     - ${{ inputs.convertDataTypes }}
     - ${{ inputs.customLogDataFile }}
+    - ${{ inputs.customLogDataFrequency }}
     - ${{ inputs.databaseChangelogLockTableName }}
     - ${{ inputs.databaseChangelogTableName }}
     - ${{ inputs.databaseClass }}
     - ${{ inputs.ddlLockTimeout }}
     - ${{ inputs.defaultsFile }}
     - ${{ inputs.diffColumnOrder }}
-    - ${{ inputs.driftChangedSeverity }}
     - ${{ inputs.driftEnabled }}
-    - ${{ inputs.driftMissingSeverity }}
-    - ${{ inputs.driftReportEnabled }}
-    - ${{ inputs.driftReportFormat }}
-    - ${{ inputs.driftReportMode }}
-    - ${{ inputs.driftReportName }}
-    - ${{ inputs.driftReportPath }}
-    - ${{ inputs.driftUnexpectedSeverity }}
+    - ${{ inputs.driftSeverity }}
+    - ${{ inputs.driftSeverityChanged }}
+    - ${{ inputs.driftSeverityMissing }}
+    - ${{ inputs.driftSeverityUnexpected }}
     - ${{ inputs.duplicateFileMode }}
     - ${{ inputs.errorOnCircularIncludeAll }}
     - ${{ inputs.fileEncoding }}
@@ -328,6 +332,10 @@ runs:
     - ${{ inputs.proSynonymsDropPublic }}
     - ${{ inputs.promptForNonLocalDatabase }}
     - ${{ inputs.propertyProviderClass }}
+    - ${{ inputs.reportsEnabled }}
+    - ${{ inputs.reportsFormat }}
+    - ${{ inputs.reportsName }}
+    - ${{ inputs.reportsPath }}
     - ${{ inputs.searchPath }}
     - ${{ inputs.secureParsing }}
     - ${{ inputs.shouldRun }}
