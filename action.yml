@@ -48,6 +48,9 @@ inputs:
   username: # string
     description: 'Username to use to connect to the database'
     required: false
+  addEmptyMdcValues: # bool
+    description: 'If true, a subset of the MdcKeys, as defined by product, will be set to empty strings upon system startup.'
+    required: false
   alwaysDropInsteadOfReplace: # bool
     description: 'If true, drop and recreate a view instead of replacing it.'
     required: false
@@ -96,21 +99,6 @@ inputs:
   diffColumnOrder: # bool
     description: 'Should Liquibase compare column order in diff operation?'
     required: false
-  driftEnabled: # bool
-    description: 'Enable or disable drift detection'
-    required: false
-  driftSeverity: # int32
-    description: 'Global object drift severity'
-    required: false
-  driftSeverityChanged: # int32
-    description: 'Changed object drift severity'
-    required: false
-  driftSeverityMissing: # int32
-    description: 'Missing object drift severity'
-    required: false
-  driftSeverityUnexpected: # int32
-    description: 'Unexpected object drift severity'
-    required: false
   duplicateFileMode: # string
     description: 'How to handle multiple files being found in the search path that have duplicate paths. Options are WARN (log warning and choose one at random) or ERROR (fail current operation)'
     required: false
@@ -137,6 +125,9 @@ inputs:
     required: false
   includeCatalogInSpecification: # bool
     description: 'Should Liquibase include the catalog name when determining equality?'
+    required: false
+  includeRelationsForComputedColumns: # bool
+    description: 'If true, the parent relationship for computed columns is preserved in snapshot-dependent commands: snapshot and diff'
     required: false
   includeSystemClasspath: # bool
     description: 'Include the system classpath when resolving classes at runtime'
@@ -195,6 +186,15 @@ inputs:
   preserveSchemaCase: # bool
     description: 'Should liquibase treat schema and catalog names as case sensitive?'
     required: false
+  proForceOnPartialChanges: # bool
+    description: 'If true, rollback execution will be forced when having partial changes that needs to be rolled back. Defaults to false.'
+    required: false
+  proGlobalEndDelimiter: # string
+    description: '[PRO]The default end delimiter to use for all change sets'
+    required: false
+  proGlobalEndDelimiterPrioritized: # bool
+    description: '[PRO]If true, the global end delimiter overrides all other settings'
+    required: false
   proLicenseKey: # string
     description: 'DEPRECATED: Liquibase Pro license key used to unlock paid capabilities. Get a free trial at https://www.liquibase.com/protrial and use in CLI or add liquibase.pro.licenseKey=<yourKey> into your defaults file.'
     required: false
@@ -240,6 +240,9 @@ inputs:
   showBanner: # bool
     description: 'If true, show a Liquibase banner on startup.'
     required: false
+  showHiddenArgs: # bool
+    description: 'If true, all command arguments marked as hidden will be shown in the help output, ignoring the hidden flag. NOTE, due to the order of value provider loading at such an early point in Liquibase startup, you MUST set this as a environment variable. Command line parameters will not be recognized.'
+    required: false
   sqlLogLevel: # string
     description: 'Level to log SQL statements to'
     required: false
@@ -251,6 +254,9 @@ inputs:
     required: false
   supportPropertyEscaping: # bool
     description: 'Support escaping changelog parameters using a colon. Example: ${:user.name}'
+    required: false
+  uiService: # string
+    description: 'Changes the default UI Service Logger used by Liquibase. Options are CONSOLE or LOGGER.'
     required: false
   useProcedureSchema: # bool
     description: 'If set to true (default value), createProcedure tags with a set schemaName will modify the procedure body with the given schema name.'
@@ -277,6 +283,7 @@ runs:
     - ${{ inputs.showSummaryOutput }}
     - ${{ inputs.url }}
     - ${{ inputs.username }}
+    - ${{ inputs.addEmptyMdcValues }}
     - ${{ inputs.alwaysDropInsteadOfReplace }}
     - ${{ inputs.alwaysOverrideStoredLogicSchema }}
     - ${{ inputs.autoReorg }}
@@ -293,11 +300,6 @@ runs:
     - ${{ inputs.ddlLockTimeout }}
     - ${{ inputs.defaultsFile }}
     - ${{ inputs.diffColumnOrder }}
-    - ${{ inputs.driftEnabled }}
-    - ${{ inputs.driftSeverity }}
-    - ${{ inputs.driftSeverityChanged }}
-    - ${{ inputs.driftSeverityMissing }}
-    - ${{ inputs.driftSeverityUnexpected }}
     - ${{ inputs.duplicateFileMode }}
     - ${{ inputs.errorOnCircularIncludeAll }}
     - ${{ inputs.fileEncoding }}
@@ -307,6 +309,7 @@ runs:
     - ${{ inputs.generatedChangesetIdsContainsDescription }}
     - ${{ inputs.headless }}
     - ${{ inputs.includeCatalogInSpecification }}
+    - ${{ inputs.includeRelationsForComputedColumns }}
     - ${{ inputs.includeSystemClasspath }}
     - ${{ inputs.licenseKey }}
     - ${{ inputs.liquibaseCatalogName }}
@@ -326,6 +329,9 @@ runs:
     - ${{ inputs.outputFileEncoding }}
     - ${{ inputs.outputLineSeparator }}
     - ${{ inputs.preserveSchemaCase }}
+    - ${{ inputs.proForceOnPartialChanges }}
+    - ${{ inputs.proGlobalEndDelimiter }}
+    - ${{ inputs.proGlobalEndDelimiterPrioritized }}
     - ${{ inputs.proLicenseKey }}
     - ${{ inputs.proMarkUnusedNotDrop }}
     - ${{ inputs.proSqlInline }}
@@ -341,10 +347,12 @@ runs:
     - ${{ inputs.shouldRun }}
     - ${{ inputs.shouldSnapshotData }}
     - ${{ inputs.showBanner }}
+    - ${{ inputs.showHiddenArgs }}
     - ${{ inputs.sqlLogLevel }}
     - ${{ inputs.sqlShowSqlWarnings }}
     - ${{ inputs.strict }}
     - ${{ inputs.supportPropertyEscaping }}
+    - ${{ inputs.uiService }}
     - ${{ inputs.useProcedureSchema }}
     - ${{ inputs.validateXmlChangelogFiles }}
 branding:

@@ -6,7 +6,7 @@ Deploy any changes in the changelog file that have not been deployed
 ```yaml
 steps:
 - uses: actions/checkout@v3
-- uses: liquibase-github-actions/update@v4.24.0
+- uses: liquibase-github-actions/update@v4.25.0
   with:
     # The root changelog
     # string
@@ -95,7 +95,7 @@ The liquibase update action accepts all valid liquibase global options as option
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: liquibase-github-actions/update@v4.24.0
+  - uses: liquibase-github-actions/update@v4.25.0
     with:
       changelogFile: ""
       url: ""
