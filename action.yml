@@ -33,6 +33,15 @@ inputs:
   password: # string
     description: 'Password to use to connect to the database'
     required: false
+  reportEnabled: # bool
+    description: '[PRO] Enable or disable reporting.'
+    required: false
+  reportName: # string
+    description: '[PRO] The name of the report.'
+    required: false
+  reportPath: # string
+    description: '[PRO] The path to the directory to generate the report.'
+    required: false
   rollbackOnError: # bool
     description: 'If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.'
     required: false
@@ -50,6 +59,9 @@ inputs:
     required: false
   addEmptyMdcValues: # bool
     description: 'If true, a subset of the MdcKeys, as defined by product, will be set to empty strings upon system startup.'
+    required: false
+  allowDuplicatedChangesetIdentifiers: # bool
+    description: 'Allows duplicated changeset identifiers without failing Liquibase execution.'
     required: false
   alwaysDropInsteadOfReplace: # bool
     description: 'If true, drop and recreate a view instead of replacing it.'
@@ -231,6 +243,12 @@ inputs:
   secureParsing: # bool
     description: 'If true, remove functionality from file parsers which could be used insecurely. Examples include (but not limited to) disabling remote XML entity support.'
     required: false
+  shouldGenerateChecksRunReport: # bool
+    description: 'If true, the checks run report will actually be generated. This argument supercedes whatever value you set on the command. However, both this and the command need to be set to true to actually generate the report.'
+    required: false
+  shouldGenerateRollbackReport: # bool
+    description: 'If true, the rollback report will actually be generated. This argument supercedes whatever value you set on the command. However, both this and the command need to be set to true to actually generate the report.'
+    required: false
   shouldRun: # bool
     description: 'Should Liquibase commands execute'
     required: false
@@ -278,12 +296,16 @@ runs:
     - ${{ inputs.driverPropertiesFile }}
     - ${{ inputs.labelFilter }}
     - ${{ inputs.password }}
+    - ${{ inputs.reportEnabled }}
+    - ${{ inputs.reportName }}
+    - ${{ inputs.reportPath }}
     - ${{ inputs.rollbackOnError }}
     - ${{ inputs.showSummary }}
     - ${{ inputs.showSummaryOutput }}
     - ${{ inputs.url }}
     - ${{ inputs.username }}
     - ${{ inputs.addEmptyMdcValues }}
+    - ${{ inputs.allowDuplicatedChangesetIdentifiers }}
     - ${{ inputs.alwaysDropInsteadOfReplace }}
     - ${{ inputs.alwaysOverrideStoredLogicSchema }}
     - ${{ inputs.autoReorg }}
@@ -344,6 +366,8 @@ runs:
     - ${{ inputs.reportsPath }}
     - ${{ inputs.searchPath }}
     - ${{ inputs.secureParsing }}
+    - ${{ inputs.shouldGenerateChecksRunReport }}
+    - ${{ inputs.shouldGenerateRollbackReport }}
     - ${{ inputs.shouldRun }}
     - ${{ inputs.shouldSnapshotData }}
     - ${{ inputs.showBanner }}
