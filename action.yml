@@ -138,6 +138,9 @@ inputs:
   includeCatalogInSpecification: # bool
     description: 'Should Liquibase include the catalog name when determining equality?'
     required: false
+  includeMatchingTagInRollbackOldest: # bool
+    description: 'If set to true, and there are multiple identical tags in the database changelog table, all of the newer matching tags will be rolled back while rolling back to the oldest tag. The default value for this option was false for all Liquibase versions equal to or older than 4.25.1.'
+    required: false
   includeRelationsForComputedColumns: # bool
     description: 'If true, the parent relationship for computed columns is preserved in snapshot-dependent commands: snapshot and diff'
     required: false
@@ -243,9 +246,6 @@ inputs:
   secureParsing: # bool
     description: 'If true, remove functionality from file parsers which could be used insecurely. Examples include (but not limited to) disabling remote XML entity support.'
     required: false
-  shouldGenerateChecksRunReport: # bool
-    description: 'If true, the checks run report will actually be generated. This argument supercedes whatever value you set on the command. However, both this and the command need to be set to true to actually generate the report.'
-    required: false
   shouldGenerateRollbackReport: # bool
     description: 'If true, the rollback report will actually be generated. This argument supercedes whatever value you set on the command. However, both this and the command need to be set to true to actually generate the report.'
     required: false
@@ -331,6 +331,7 @@ runs:
     - ${{ inputs.generatedChangesetIdsContainsDescription }}
     - ${{ inputs.headless }}
     - ${{ inputs.includeCatalogInSpecification }}
+    - ${{ inputs.includeMatchingTagInRollbackOldest }}
     - ${{ inputs.includeRelationsForComputedColumns }}
     - ${{ inputs.includeSystemClasspath }}
     - ${{ inputs.licenseKey }}
@@ -366,7 +367,6 @@ runs:
     - ${{ inputs.reportsPath }}
     - ${{ inputs.searchPath }}
     - ${{ inputs.secureParsing }}
-    - ${{ inputs.shouldGenerateChecksRunReport }}
     - ${{ inputs.shouldGenerateRollbackReport }}
     - ${{ inputs.shouldRun }}
     - ${{ inputs.shouldSnapshotData }}
