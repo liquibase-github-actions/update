@@ -102,6 +102,21 @@ inputs:
   databaseClass: # string
     description: 'Class to use for Database implementation'
     required: false
+  dbclhistoryCaptureExtensions: # bool
+    description: 'If true, extensions are captured in the history table'
+    required: false
+  dbclhistoryCaptureSql: # bool
+    description: 'If true, executed SQL is captured in the history table'
+    required: false
+  dbclhistoryEnabled: # bool
+    description: '[PRO]This property enables Liquibase Pro users to store a record of all database changing liquibase operations in a new table DATABASECHANGELOGHISTORY. This table includes records of rollback, dropalls, and repeated runOnChange type activity, which is not available in the standard DATABASECHANGELOG table.'
+    required: false
+  dbclhistorySeverity: # int32
+    description: 'The exit code to use if an exception is encountered while recording history events'
+    required: false
+  dbclhistoryTableName: # string
+    description: ''
+    required: false
   ddlLockTimeout: # int32
     description: 'The DDL_LOCK_TIMEOUT parameter indicates the number of seconds a DDL command should wait for the locks to become available before throwing the resource busy error message. This applies only to Oracle databases.'
     required: false
@@ -246,9 +261,6 @@ inputs:
   secureParsing: # bool
     description: 'If true, remove functionality from file parsers which could be used insecurely. Examples include (but not limited to) disabling remote XML entity support.'
     required: false
-  shouldGenerateRollbackReport: # bool
-    description: 'If true, the rollback report will actually be generated. This argument supercedes whatever value you set on the command. However, both this and the command need to be set to true to actually generate the report.'
-    required: false
   shouldRun: # bool
     description: 'Should Liquibase commands execute'
     required: false
@@ -281,6 +293,9 @@ inputs:
     required: false
   validateXmlChangelogFiles: # bool
     description: 'Will perform xsd validation of XML changelog files. When many XML changelog files are included this validation may impact Liquibase performance. Defaults to true.'
+    required: false
+  workaroundOracleClobCharacterLimit: # bool
+    description: 'If true, long strings in Oracle will be chunked at 4000 characters when an insert statement is run, to avoid running afoul of Oracle"s 4000 character limit for insert statements to clob type columns (which appears as "ORA-01704: string literal too long.")'
     required: false
 runs:
   using: 'docker'
@@ -319,6 +334,11 @@ runs:
     - ${{ inputs.databaseChangelogLockTableName }}
     - ${{ inputs.databaseChangelogTableName }}
     - ${{ inputs.databaseClass }}
+    - ${{ inputs.dbclhistoryCaptureExtensions }}
+    - ${{ inputs.dbclhistoryCaptureSql }}
+    - ${{ inputs.dbclhistoryEnabled }}
+    - ${{ inputs.dbclhistorySeverity }}
+    - ${{ inputs.dbclhistoryTableName }}
     - ${{ inputs.ddlLockTimeout }}
     - ${{ inputs.defaultsFile }}
     - ${{ inputs.diffColumnOrder }}
@@ -367,7 +387,6 @@ runs:
     - ${{ inputs.reportsPath }}
     - ${{ inputs.searchPath }}
     - ${{ inputs.secureParsing }}
-    - ${{ inputs.shouldGenerateRollbackReport }}
     - ${{ inputs.shouldRun }}
     - ${{ inputs.shouldSnapshotData }}
     - ${{ inputs.showBanner }}
@@ -379,6 +398,7 @@ runs:
     - ${{ inputs.uiService }}
     - ${{ inputs.useProcedureSchema }}
     - ${{ inputs.validateXmlChangelogFiles }}
+    - ${{ inputs.workaroundOracleClobCharacterLimit }}
 branding:
   icon: database
   color: red
