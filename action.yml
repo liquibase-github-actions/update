@@ -190,6 +190,9 @@ inputs:
   mirrorConsoleMessagesToLog: # bool
     description: 'When set to true, the console messages are mirrored to the logs as [liquibase.ui] to provide a more complete picture of liquibase operations to log analysis tools. Set to false to change this behavior.'
     required: false
+  mirrorOutputToConsole: # bool
+    description: '[PRO]When set to true, console output will be mirrored to both the specified output-file and the console. If output-file is not set, the "mirror-output-to-console" argument has no effect.'
+    required: false
   missingPropertyMode: # string
     description: 'How to handle changelog property expressions where a value is not set. For example, a string "${address}" when no "address" property was defined. Values can be: "preserve" which leaves the string as-is, "empty" which replaces it with an empty string, or "error" which stops processing with an error.'
     required: false
@@ -238,6 +241,9 @@ inputs:
   proSynonymsDropPublic: # bool
     description: 'If false, do not drop public synonyms in diffChangeLog/dropAll'
     required: false
+  proStrict: # bool
+    description: '[PRO]If true, the Liquibase operations will fail when specified paths to Pro resource files (flow files, checks settings files, native executor conf files, etc) or rollback scripts are missing or empty.'
+    required: false
   promptForNonLocalDatabase: # bool
     description: 'Should Liquibase prompt if a non-local database is being accessed'
     required: false
@@ -252,6 +258,9 @@ inputs:
     required: false
   reportsName: # string
     description: 'The name of the reports.'
+    required: false
+  reportsOpen: # bool
+    description: 'Open the newly generated report in your default browser.'
     required: false
   reportsPath: # string
     description: 'The path to the directory to generate the reports.'
@@ -273,6 +282,9 @@ inputs:
     required: false
   showHiddenArgs: # bool
     description: 'If true, all command arguments marked as hidden will be shown in the help output, ignoring the hidden flag. NOTE, due to the order of value provider loading at such an early point in Liquibase startup, you MUST set this as a environment variable. Command line parameters will not be recognized.'
+    required: false
+  sqlAlwaysSetFetchSize: # bool
+    description: 'If true, all queries will have their fetch size set to the fetch size defined in their database implementation. This has the effect of informing the driver how many rows should be fetched when processing the result set. This is not guaranteed to be respected by the driver, but if respected, should improve query performance significantly.'
     required: false
   sqlLogLevel: # string
     description: 'Level to log SQL statements to'
@@ -364,6 +376,7 @@ runs:
     - ${{ inputs.logFormat }}
     - ${{ inputs.logLevel }}
     - ${{ inputs.mirrorConsoleMessagesToLog }}
+    - ${{ inputs.mirrorOutputToConsole }}
     - ${{ inputs.missingPropertyMode }}
     - ${{ inputs.monitorPerformance }}
     - ${{ inputs.nativeExecutor }}
@@ -380,11 +393,13 @@ runs:
     - ${{ inputs.proMarkUnusedNotDrop }}
     - ${{ inputs.proSqlInline }}
     - ${{ inputs.proSynonymsDropPublic }}
+    - ${{ inputs.proStrict }}
     - ${{ inputs.promptForNonLocalDatabase }}
     - ${{ inputs.propertyProviderClass }}
     - ${{ inputs.reportsEnabled }}
     - ${{ inputs.reportsFormat }}
     - ${{ inputs.reportsName }}
+    - ${{ inputs.reportsOpen }}
     - ${{ inputs.reportsPath }}
     - ${{ inputs.searchPath }}
     - ${{ inputs.secureParsing }}
@@ -392,6 +407,7 @@ runs:
     - ${{ inputs.shouldSnapshotData }}
     - ${{ inputs.showBanner }}
     - ${{ inputs.showHiddenArgs }}
+    - ${{ inputs.sqlAlwaysSetFetchSize }}
     - ${{ inputs.sqlLogLevel }}
     - ${{ inputs.sqlShowSqlWarnings }}
     - ${{ inputs.strict }}
