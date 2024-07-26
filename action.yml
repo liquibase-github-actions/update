@@ -149,7 +149,7 @@ inputs:
     description: 'Should Liquibase include the change description in the id when generating changesets?'
     required: false
   headless: # bool
-    description: 'Force liquibase to think it has no access to a keyboard'
+    description: 'Force Liquibase to think it has no access to a keyboard'
     required: false
   includeCatalogInSpecification: # bool
     description: 'Should Liquibase include the catalog name when determining equality?'
@@ -218,7 +218,7 @@ inputs:
     description: 'Line separator for output'
     required: false
   preserveSchemaCase: # bool
-    description: 'Should liquibase treat schema and catalog names as case sensitive?'
+    description: 'If true, Liquibase treats schema and catalog names as case sensitive'
     required: false
   proForceOnPartialChanges: # bool
     description: 'If true, rollback execution will be forced when having partial changes that needs to be rolled back. Defaults to false.'
@@ -251,19 +251,22 @@ inputs:
     description: 'Implementation of Properties class to provide additional driver properties'
     required: false
   reportsEnabled: # bool
-    description: 'Enable or disable reporting.'
+    description: '[PRO]Enable or disable reporting.'
     required: false
   reportsFormat: # string
-    description: 'The format of the report. Currently, can only be set to "html".'
+    description: '[PRO]The format of the report. Currently, can only be set to "html".'
     required: false
   reportsName: # string
-    description: 'The name of the reports.'
+    description: '[PRO]The name of the reports.'
     required: false
   reportsOpen: # bool
-    description: 'Open the newly generated report in your default browser.'
+    description: '[PRO]Open the newly generated report in your default browser.'
     required: false
   reportsPath: # string
-    description: 'The path to the directory to generate the reports.'
+    description: '[PRO]The path to the directory to generate the reports.'
+    required: false
+  reportsQuiet: # bool
+    description: '[PRO]Minimize the amount of logging when generating reports.'
     required: false
   searchPath: # string
     description: 'Complete list of Location(s) to search for files such as changelog files in. Multiple paths can be specified by separating them with commas.'
@@ -293,10 +296,16 @@ inputs:
     description: 'Show SQLWarning messages'
     required: false
   strict: # bool
-    description: 'Be stricter on allowed Liquibase configuration and setup?'
+    description: 'If true, Liquibase enforces certain best practices and proactively looks for common errors'
     required: false
   supportPropertyEscaping: # bool
     description: 'Support escaping changelog parameters using a colon. Example: ${:user.name}'
+    required: false
+  supportsMethodValidationLevel: # string
+    description: 'Controls the level of validation performed on the supports method of Change classes. Options are OFF, WARN, FAIL.'
+    required: false
+  trimLoadDataFileHeader: # bool
+    description: 'If true column headers will be trimmed in case they were specified with spaces in the file.'
     required: false
   uiService: # string
     description: 'Changes the default UI Service Logger used by Liquibase. Options are CONSOLE or LOGGER.'
@@ -305,7 +314,7 @@ inputs:
     description: 'If set to true (default value), createProcedure tags with a set schemaName will modify the procedure body with the given schema name.'
     required: false
   validateXmlChangelogFiles: # bool
-    description: 'Will perform xsd validation of XML changelog files. When many XML changelog files are included this validation may impact Liquibase performance. Defaults to true.'
+    description: 'Will perform XSD validation of XML changelog files. When many XML changelog files are included, this validation may impact Liquibase performance. Defaults to true.'
     required: false
   workaroundOracleClobCharacterLimit: # bool
     description: 'If true, long strings in Oracle will be chunked at 4000 characters when an insert statement is run, to avoid running afoul of Oracle"s 4000 character limit for insert statements to clob type columns (which appears as "ORA-01704: string literal too long.")'
@@ -401,6 +410,7 @@ runs:
     - ${{ inputs.reportsName }}
     - ${{ inputs.reportsOpen }}
     - ${{ inputs.reportsPath }}
+    - ${{ inputs.reportsQuiet }}
     - ${{ inputs.searchPath }}
     - ${{ inputs.secureParsing }}
     - ${{ inputs.shouldRun }}
@@ -412,6 +422,8 @@ runs:
     - ${{ inputs.sqlShowSqlWarnings }}
     - ${{ inputs.strict }}
     - ${{ inputs.supportPropertyEscaping }}
+    - ${{ inputs.supportsMethodValidationLevel }}
+    - ${{ inputs.trimLoadDataFileHeader }}
     - ${{ inputs.uiService }}
     - ${{ inputs.useProcedureSchema }}
     - ${{ inputs.validateXmlChangelogFiles }}
