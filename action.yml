@@ -128,7 +128,7 @@ inputs:
     description: 'Should Liquibase compare column order in diff operation?'
     required: false
   duplicateFileMode: # string
-    description: 'How to handle multiple files being found in the search path that have duplicate paths. Options are WARN (log warning and choose one at random) or ERROR (fail current operation)'
+    description: 'How to handle multiple files being found in the search path that have duplicate paths. Options are SILENT (do not log and choose one at random), DEBUG, INFO, WARN (log at the given level and choose one at random), or ERROR (fail current operation).'
     required: false
   errorOnCircularIncludeAll: # bool
     description: 'Throw an error if Liquibase detects that an includeAll will cause a circular reference (and thus a changelog parse error).'
@@ -229,6 +229,12 @@ inputs:
   proGlobalEndDelimiterPrioritized: # bool
     description: '[PRO]If true, the global end delimiter overrides all other settings'
     required: false
+  proGlobalStripComments: # bool
+    description: '[PRO]The default strip comments to use for all change sets'
+    required: false
+  proGlobalStripCommentsPrioritized: # bool
+    description: '[PRO]If true, the global strip comments overrides all other settings'
+    required: false
   proLicenseKey: # string
     description: 'DEPRECATED: Liquibase Pro license key used to unlock paid capabilities. Get a free trial at https://www.liquibase.com/protrial and use in CLI or add liquibase.pro.licenseKey=<yourKey> into your defaults file.'
     required: false
@@ -303,6 +309,9 @@ inputs:
     required: false
   supportsMethodValidationLevel: # string
     description: 'Controls the level of validation performed on the supports method of Change classes. Options are OFF, WARN, FAIL.'
+    required: false
+  suppressLiquibaseSql: # bool
+    description: 'When set to true, this global property prevents DBCL and DBCLH sql from being present in console and logs during *-sql commands, such as update-sql, rollback-sql, etc.'
     required: false
   trimLoadDataFileHeader: # bool
     description: 'If true column headers will be trimmed in case they were specified with spaces in the file.'
@@ -398,6 +407,8 @@ runs:
     - ${{ inputs.proForceOnPartialChanges }}
     - ${{ inputs.proGlobalEndDelimiter }}
     - ${{ inputs.proGlobalEndDelimiterPrioritized }}
+    - ${{ inputs.proGlobalStripComments }}
+    - ${{ inputs.proGlobalStripCommentsPrioritized }}
     - ${{ inputs.proLicenseKey }}
     - ${{ inputs.proMarkUnusedNotDrop }}
     - ${{ inputs.proSqlInline }}
@@ -423,6 +434,7 @@ runs:
     - ${{ inputs.strict }}
     - ${{ inputs.supportPropertyEscaping }}
     - ${{ inputs.supportsMethodValidationLevel }}
+    - ${{ inputs.suppressLiquibaseSql }}
     - ${{ inputs.trimLoadDataFileHeader }}
     - ${{ inputs.uiService }}
     - ${{ inputs.useProcedureSchema }}
