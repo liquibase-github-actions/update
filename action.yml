@@ -70,6 +70,27 @@ inputs:
   alwaysOverrideStoredLogicSchema: # bool
     description: 'When generating SQL for createProcedure, should the procedure schema be forced to the default schema if no schemaName attribute is set?'
     required: false
+  analyticsConfigEndpointTimeoutMillis: # int32
+    description: ''
+    required: false
+  analyticsConfigEndpointUrl: # string
+    description: ''
+    required: false
+  analyticsDevOverride: # bool
+    description: 'By default, Liquibase will not send analytics in dev (non release) builds. To override this behavior, set this value to true and provide a value for liquibase.analytics.configEndpointUrl'
+    required: false
+  analyticsEnabled: # bool
+    description: 'Enable or disable sending product usage data and analytics to Liquibase. Learn more at https://docs.liquibase.com/analytics. DEFAULT: true for OSS users | false for PRO users'
+    required: false
+  analyticsLicenseKeyChars: # int32
+    description: 'Number of characters of the license key that should be appended to the userId. This is used in the event that the same customer has multiple license keys associated with them.'
+    required: false
+  analyticsLogLevel: # string
+    description: ''
+    required: false
+  analyticsTimeoutMillis: # int32
+    description: 'By default, the timeout for sending data to the remote endpoint is configured in the config endpoint. Any value set here will override that value.'
+    required: false
   autoReorg: # bool
     description: 'Should Liquibase automatically include REORG TABLE commands when needed?'
     required: false
@@ -163,6 +184,9 @@ inputs:
   includeSystemClasspath: # bool
     description: 'Include the system classpath when resolving classes at runtime'
     required: false
+  integrationName: # string
+    description: 'The name of the integration used to invoke Liquibase, for example, cli, or JavaAPI. It is not required to specify this value. This is primarily used by wrappers around Liquibase (like Gradle), so that analytics can be differentiated for those integrations.'
+    required: false
   licenseKey: # string
     description: 'Liquibase Pro or Liquibase Labs license key used to unlock paid capabilities. Get a free trial at https://liquibase.com/trial and use in CLI or add liquibase.licenseKey=<yourKey> into your defaults file.'
     required: false
@@ -216,6 +240,9 @@ inputs:
     required: false
   outputLineSeparator: # string
     description: 'Line separator for output'
+    required: false
+  preserveClasspathPrefixInNormalizedPaths: # bool
+    description: 'If true "classpath:" prefix will be preserved in normalized paths, allowing to resolve hierarchical resources under a classpath-based root.'
     required: false
   preserveSchemaCase: # bool
     description: 'If true, Liquibase treats schema and catalog names as case sensitive'
@@ -354,6 +381,13 @@ runs:
     - ${{ inputs.allowDuplicatedChangesetIdentifiers }}
     - ${{ inputs.alwaysDropInsteadOfReplace }}
     - ${{ inputs.alwaysOverrideStoredLogicSchema }}
+    - ${{ inputs.analyticsConfigEndpointTimeoutMillis }}
+    - ${{ inputs.analyticsConfigEndpointUrl }}
+    - ${{ inputs.analyticsDevOverride }}
+    - ${{ inputs.analyticsEnabled }}
+    - ${{ inputs.analyticsLicenseKeyChars }}
+    - ${{ inputs.analyticsLogLevel }}
+    - ${{ inputs.analyticsTimeoutMillis }}
     - ${{ inputs.autoReorg }}
     - ${{ inputs.changelogLockPollRate }}
     - ${{ inputs.changelogLockWaitTimeInMinutes }}
@@ -385,6 +419,7 @@ runs:
     - ${{ inputs.includeMatchingTagInRollbackOldest }}
     - ${{ inputs.includeRelationsForComputedColumns }}
     - ${{ inputs.includeSystemClasspath }}
+    - ${{ inputs.integrationName }}
     - ${{ inputs.licenseKey }}
     - ${{ inputs.liquibaseCatalogName }}
     - ${{ inputs.liquibaseSchemaName }}
@@ -403,6 +438,7 @@ runs:
     - ${{ inputs.outputFile }}
     - ${{ inputs.outputFileEncoding }}
     - ${{ inputs.outputLineSeparator }}
+    - ${{ inputs.preserveClasspathPrefixInNormalizedPaths }}
     - ${{ inputs.preserveSchemaCase }}
     - ${{ inputs.proForceOnPartialChanges }}
     - ${{ inputs.proGlobalEndDelimiter }}
