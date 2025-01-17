@@ -43,6 +43,12 @@ inputs:
   reportPath: # string
     description: '[PRO] The path to the directory to generate the report.'
     required: false
+  reportSuppressException: # bool
+    description: '[PRO] Setting to prevent the display of exceptions (which might contain SQL) in operation reports. If suppressSql is on, and no value is provided here, it is assumed to also be on.'
+    required: false
+  reportSuppressSql: # bool
+    description: '[PRO] Setting to prevent the display of changeset SQL in operation reports.'
+    required: false
   rollbackOnError: # bool
     description: 'If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.'
     required: false
@@ -69,6 +75,9 @@ inputs:
     required: false
   alwaysOverrideStoredLogicSchema: # bool
     description: 'When generating SQL for createProcedure, should the procedure schema be forced to the default schema if no schemaName attribute is set?'
+    required: false
+  analyticsConfigCacheTimeoutMillis: # string
+    description: 'Liquibase caches the results from the config endpoint, and this value determines how long that cache should live for before being refreshed.'
     required: false
   analyticsConfigEndpointTimeoutMillis: # int32
     description: ''
@@ -102,6 +111,9 @@ inputs:
     required: false
   changelogParseMode: # string
     description: 'Configures how to handle unknown fields in changelog files. Possible values: STRICT which causes parsing to fail, and LAX which continues with the parsing.'
+    required: false
+  checksCompatibilityEnabled: # bool
+    description: 'Enable liquibase-checks extension compatibility check.  Can be used when running tests to turn off the check.'
     required: false
   classpath: # string
     description: 'Additional classpath entries to use'
@@ -301,6 +313,15 @@ inputs:
   reportsQuiet: # bool
     description: '[PRO]Minimize the amount of logging when generating reports.'
     required: false
+  reportsSuppressException: # bool
+    description: '[PRO]Global setting to prevent the display of exceptions in operation reports.'
+    required: false
+  reportsSuppressSql: # bool
+    description: '[PRO]Global setting to prevent the display of changeset SQL in operation reports.'
+    required: false
+  scriptPythonExecutablePath: # string
+    description: 'Path to a Python executable associated with a virtual environment'
+    required: false
   searchPath: # string
     description: 'Complete list of Location(s) to search for files such as changelog files in. Multiple paths can be specified by separating them with commas.'
     required: false
@@ -372,6 +393,8 @@ runs:
     - ${{ inputs.reportEnabled }}
     - ${{ inputs.reportName }}
     - ${{ inputs.reportPath }}
+    - ${{ inputs.reportSuppressException }}
+    - ${{ inputs.reportSuppressSql }}
     - ${{ inputs.rollbackOnError }}
     - ${{ inputs.showSummary }}
     - ${{ inputs.showSummaryOutput }}
@@ -381,6 +404,7 @@ runs:
     - ${{ inputs.allowDuplicatedChangesetIdentifiers }}
     - ${{ inputs.alwaysDropInsteadOfReplace }}
     - ${{ inputs.alwaysOverrideStoredLogicSchema }}
+    - ${{ inputs.analyticsConfigCacheTimeoutMillis }}
     - ${{ inputs.analyticsConfigEndpointTimeoutMillis }}
     - ${{ inputs.analyticsConfigEndpointUrl }}
     - ${{ inputs.analyticsDevOverride }}
@@ -392,6 +416,7 @@ runs:
     - ${{ inputs.changelogLockPollRate }}
     - ${{ inputs.changelogLockWaitTimeInMinutes }}
     - ${{ inputs.changelogParseMode }}
+    - ${{ inputs.checksCompatibilityEnabled }}
     - ${{ inputs.classpath }}
     - ${{ inputs.convertDataTypes }}
     - ${{ inputs.customLogDataFile }}
@@ -458,6 +483,9 @@ runs:
     - ${{ inputs.reportsOpen }}
     - ${{ inputs.reportsPath }}
     - ${{ inputs.reportsQuiet }}
+    - ${{ inputs.reportsSuppressException }}
+    - ${{ inputs.reportsSuppressSql }}
+    - ${{ inputs.scriptPythonExecutablePath }}
     - ${{ inputs.searchPath }}
     - ${{ inputs.secureParsing }}
     - ${{ inputs.shouldRun }}

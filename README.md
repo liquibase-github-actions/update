@@ -6,7 +6,7 @@ Deploy any changes in the changelog file that have not been deployed
 ```yaml
 steps:
 - uses: actions/checkout@v3
-- uses: liquibase-github-actions/update@v4.30.0
+- uses: liquibase-github-actions/update@v4.31.0
   with:
     # The root changelog
     # string
@@ -78,6 +78,16 @@ steps:
     # Optional
     reportPath: ""
 
+    # [PRO] Setting to prevent the display of exceptions (which might contain SQL) in operation reports. If suppressSql is on, and no value is provided here, it is assumed to also be on.
+    # bool
+    # Optional
+    reportSuppressException: ""
+
+    # [PRO] Setting to prevent the display of changeset SQL in operation reports.
+    # bool
+    # Optional
+    reportSuppressSql: ""
+
     # If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.
     # bool
     # Optional
@@ -110,7 +120,7 @@ The liquibase update action accepts all valid liquibase global options as option
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: liquibase-github-actions/update@v4.30.0
+  - uses: liquibase-github-actions/update@v4.31.0
     with:
       changelogFile: ""
       url: ""

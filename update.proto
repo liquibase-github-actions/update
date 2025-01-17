@@ -27,12 +27,14 @@ message UpdateRequest {
   optional bool report_enabled = 11; // [PRO] Enable or disable reporting.
   optional string report_name = 12; // [PRO] The name of the report.
   optional string report_path = 13; // [PRO] The path to the directory to generate the report.
-  optional bool rollback_on_error = 14; // If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.
-  optional string show_summary = 15; // Type of update results summary to show.  Values can be 'off', 'summary', or 'verbose'.
-  optional string show_summary_output = 16; // Summary output to report update summary results. Values can be 'log', 'console', or 'all'.
-  string url = 17; // *required* The JDBC database connection URL
-  optional string username = 18; // Username to use to connect to the database
-  liquibase.GlobalOptions global_options = 19;
+  optional bool report_suppress_exception = 14; // [PRO] Setting to prevent the display of exceptions (which might contain SQL) in operation reports. If suppressSql is on, and no value is provided here, it is assumed to also be on.
+  optional bool report_suppress_sql = 15; // [PRO] Setting to prevent the display of changeset SQL in operation reports.
+  optional bool rollback_on_error = 16; // If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset.
+  optional string show_summary = 17; // Type of update results summary to show.  Values can be 'off', 'summary', or 'verbose'.
+  optional string show_summary_output = 18; // Summary output to report update summary results. Values can be 'log', 'console', or 'all'.
+  string url = 19; // *required* The JDBC database connection URL
+  optional string username = 20; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 21;
 }
 
 message Response {
