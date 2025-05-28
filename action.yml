@@ -89,7 +89,7 @@ inputs:
     description: 'By default, Liquibase will not send analytics in dev (non release) builds. To override this behavior, set this value to true and provide a value for liquibase.analytics.configEndpointUrl'
     required: false
   analyticsEnabled: # bool
-    description: 'Enable or disable sending product usage data and analytics to Liquibase. Learn more at https://docs.liquibase.com/analytics. DEFAULT: true for OSS users | false for PRO users'
+    description: 'Enable or disable sending product usage data and analytics to Liquibase. Learn more at https://docs.liquibase.com/analytics.'
     required: false
   analyticsLicenseKeyChars: # int32
     description: 'Number of characters of the license key that should be appended to the userId. This is used in the event that the same customer has multiple license keys associated with them.'
@@ -193,11 +193,29 @@ inputs:
   includeRelationsForComputedColumns: # bool
     description: 'If true, the parent relationship for computed columns is preserved in snapshot-dependent commands: snapshot and diff'
     required: false
+  includeSchemaNameForDefault: # bool
+    description: 'If true, the schema name is included for the default schema when loading a snapshot'
+    required: false
   includeSystemClasspath: # bool
     description: 'Include the system classpath when resolving classes at runtime'
     required: false
   integrationName: # string
     description: 'The name of the integration used to invoke Liquibase, for example, cli, or JavaAPI. It is not required to specify this value. This is primarily used by wrappers around Liquibase (like Gradle), so that analytics can be differentiated for those integrations.'
+    required: false
+  licenseUtilityEnabled: # bool
+    description: 'Enable or disable sending license usage data.'
+    required: false
+  licenseUtilityLogLevel: # string
+    description: ''
+    required: false
+  licenseUtilityTimeout: # int32
+    description: 'Time, in milliseconds, to wait for HTTP request to complete'
+    required: false
+  licenseUtilityTrackingId: # string
+    description: 'Specifies an identifier (e.g., team name, pipeline ID, or environment) to track and analyze Liquibase license usage. If not provided, the hostname and user is used for identification.'
+    required: false
+  licenseUtilityUrl: # string
+    description: ''
     required: false
   licenseKey: # string
     description: 'Liquibase Pro or Liquibase Labs license key used to unlock paid capabilities. Get a free trial at https://liquibase.com/trial and use in CLI or add liquibase.licenseKey=<yourKey> into your defaults file.'
@@ -215,7 +233,7 @@ inputs:
     description: 'Controls which log channels have their level set by the liquibase.logLevel setting. Comma separate multiple values. To set the level of all channels, use "all". Example: liquibase,org.mariadb.jdbc'
     required: false
   logFile: # string
-    description: ''
+    description: 'Users can use .gz file extension to enable log files compression.'
     required: false
   logFormat: # string
     description: 'Sets the format of log output to console or log files. Open Source users default to unstructured "TEXT" logs to the console or output log files. Pro users have the option to set value as "JSON" or "JSON_PRETTY" to enable json-structured log files to the console or output log files.'
@@ -234,6 +252,9 @@ inputs:
     required: false
   monitorPerformance: # string
     description: 'Enable performance tracking. Set to "false" to disable. If set to "true", data is stored to a `liquibase-TIMESTAMP.jfr` file in your working directory. Any other value will enable tracking and be used as the name of the file to write the data to.'
+    required: false
+  mysqlEnableDbclPrimaryKey: # bool
+    description: '[PRO]Flag to enable composite primary key for newly added DBCL tables. Disabled by default'
     required: false
   nativeExecutor: # string
     description: 'Custom executor that can specified'
@@ -340,6 +361,18 @@ inputs:
   showHiddenArgs: # bool
     description: 'If true, all command arguments marked as hidden will be shown in the help output, ignoring the hidden flag. NOTE, due to the order of value provider loading at such an early point in Liquibase startup, you MUST set this as a environment variable. Command line parameters will not be recognized.'
     required: false
+  snowflakeAuthPrivateKeyPassphrase: # string
+    description: '[PRO]Path to private key used for PKI Authentication type. Usually requires "snowflake-auth-type" property configured.'
+    required: false
+  snowflakeAuthPrivateKeyPath: # string
+    description: '[PRO]Path to private key used for PKI Authentication type. Usually requires "snowflake-auth-type" property configured.'
+    required: false
+  snowflakeAuthToken: # string
+    description: '[PRO]Value of the token used for specified Authentication type. Usually requires "snowflake-auth-type" property configured.'
+    required: false
+  snowflakeAuthType: # string
+    description: '[PRO]The type or mechanism of Snowflake database authentication'
+    required: false
   sqlAlwaysSetFetchSize: # bool
     description: 'If true, all queries will have their fetch size set to the fetch size defined in their database implementation. This has the effect of informing the driver how many rows should be fetched when processing the result set. This is not guaranteed to be respected by the driver, but if respected, should improve query performance significantly.'
     required: false
@@ -443,8 +476,14 @@ runs:
     - ${{ inputs.includeCatalogInSpecification }}
     - ${{ inputs.includeMatchingTagInRollbackOldest }}
     - ${{ inputs.includeRelationsForComputedColumns }}
+    - ${{ inputs.includeSchemaNameForDefault }}
     - ${{ inputs.includeSystemClasspath }}
     - ${{ inputs.integrationName }}
+    - ${{ inputs.licenseUtilityEnabled }}
+    - ${{ inputs.licenseUtilityLogLevel }}
+    - ${{ inputs.licenseUtilityTimeout }}
+    - ${{ inputs.licenseUtilityTrackingId }}
+    - ${{ inputs.licenseUtilityUrl }}
     - ${{ inputs.licenseKey }}
     - ${{ inputs.liquibaseCatalogName }}
     - ${{ inputs.liquibaseSchemaName }}
@@ -457,6 +496,7 @@ runs:
     - ${{ inputs.mirrorOutputToConsole }}
     - ${{ inputs.missingPropertyMode }}
     - ${{ inputs.monitorPerformance }}
+    - ${{ inputs.mysqlEnableDbclPrimaryKey }}
     - ${{ inputs.nativeExecutor }}
     - ${{ inputs.onMissingIncludeChangelog }}
     - ${{ inputs.onMissingSqlFile }}
@@ -492,6 +532,10 @@ runs:
     - ${{ inputs.shouldSnapshotData }}
     - ${{ inputs.showBanner }}
     - ${{ inputs.showHiddenArgs }}
+    - ${{ inputs.snowflakeAuthPrivateKeyPassphrase }}
+    - ${{ inputs.snowflakeAuthPrivateKeyPath }}
+    - ${{ inputs.snowflakeAuthToken }}
+    - ${{ inputs.snowflakeAuthType }}
     - ${{ inputs.sqlAlwaysSetFetchSize }}
     - ${{ inputs.sqlLogLevel }}
     - ${{ inputs.sqlShowSqlWarnings }}
