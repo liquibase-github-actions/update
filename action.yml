@@ -136,6 +136,18 @@ inputs:
   databaseClass: # string
     description: 'Class to use for Database implementation'
     required: false
+  db2zDatabasechangelogIndex: # string
+    description: 'The index name for the DATABASECHANGELOG table on DB2 z/OS'
+    required: false
+  db2zDatabasechangeloglockIndex: # string
+    description: 'The index name for the DATABASECHANGELOGLOCK table on DB2 z/OS'
+    required: false
+  db2zTrackingTablesLocationDatabase: # string
+    description: 'The database name for the Liquibase tracking tables on DB2 z/OS'
+    required: false
+  db2zTrackingTablesLocationTablespace: # string
+    description: 'The tablespace name for the Liquibase tracking tables on DB2 z/OS'
+    required: false
   dbclhistoryCaptureExtensions: # bool
     description: 'If true, extensions are captured in the history table'
     required: false
@@ -201,6 +213,18 @@ inputs:
     required: false
   integrationName: # string
     description: 'The name of the integration used to invoke Liquibase, for example, cli, or JavaAPI. It is not required to specify this value. This is primarily used by wrappers around Liquibase (like Gradle), so that analytics can be differentiated for those integrations.'
+    required: false
+  jclCreateLogFile: # bool
+    description: 'If true, then write to a JCL log file'
+    required: false
+  jclLogFilePath: # string
+    description: 'Log file path for JCL output'
+    required: false
+  jclMinimumErrorReturnCode: # int32
+    description: 'Minimum return code recognized as an error'
+    required: false
+  jclOverwriteLogFile: # bool
+    description: 'If true, overwrite JCL log file'
     required: false
   licenseUtilityEnabled: # bool
     description: 'Enable or disable sending license usage data.'
@@ -457,6 +481,10 @@ runs:
     - ${{ inputs.databaseChangelogLockTableName }}
     - ${{ inputs.databaseChangelogTableName }}
     - ${{ inputs.databaseClass }}
+    - ${{ inputs.db2zDatabasechangelogIndex }}
+    - ${{ inputs.db2zDatabasechangeloglockIndex }}
+    - ${{ inputs.db2zTrackingTablesLocationDatabase }}
+    - ${{ inputs.db2zTrackingTablesLocationTablespace }}
     - ${{ inputs.dbclhistoryCaptureExtensions }}
     - ${{ inputs.dbclhistoryCaptureSql }}
     - ${{ inputs.dbclhistoryEnabled }}
@@ -479,6 +507,10 @@ runs:
     - ${{ inputs.includeSchemaNameForDefault }}
     - ${{ inputs.includeSystemClasspath }}
     - ${{ inputs.integrationName }}
+    - ${{ inputs.jclCreateLogFile }}
+    - ${{ inputs.jclLogFilePath }}
+    - ${{ inputs.jclMinimumErrorReturnCode }}
+    - ${{ inputs.jclOverwriteLogFile }}
     - ${{ inputs.licenseUtilityEnabled }}
     - ${{ inputs.licenseUtilityLogLevel }}
     - ${{ inputs.licenseUtilityTimeout }}
