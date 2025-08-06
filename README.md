@@ -1,24 +1,31 @@
 # Liquibase Update Action
 
-⚠️ **VERSION SUPPORT NOTICE**: This action supports Liquibase versions up to 4.x. For Liquibase 5.0+ features, please migrate to [`liquibase/setup-liquibase`](https://github.com/liquibase/setup-liquibase).
+⚠️ **VERSION SUPPORT NOTICE**: This action will continue to be supported for Liquibase 4.x. Starting with Liquibase 5.x, it will no longer be supported. 
+
+**Migration to [`liquibase/setup-liquibase`](https://github.com/liquibase/setup-liquibase)**: Available for Liquibase versions 4.32.0 and above. If you're using an older version, upgrade your Liquibase version first.
 
 ## Migration Guide
 
-### Current Approach (Supports Liquibase 4.x)
+### Current Approach (Liquibase 4.x)
 ```yaml
 - uses: liquibase-github-actions/update@v4.33.0
   with:
     # your parameters here
 ```
 
-### Recommended for Liquibase 5.0+ Features
+### Recommended Approach (Liquibase 4.32.0+)
 ```yaml
 - uses: liquibase/setup-liquibase@v1
   with:
-    version: '5.0.0'  # Supports latest features
+    version: '4.33.0'  # Requires 4.32.0 or higher
     edition: 'oss'
 - run: liquibase update # add your parameters as CLI flags
 ```
+
+### Migration Steps
+1. **Check your Liquibase version**: Ensure you're using 4.32.0 or higher
+2. **If using older version**: Update to 4.32.0+ first using the current micro actions
+3. **Then migrate**: Switch to setup-liquibase action
 
 ---
 
